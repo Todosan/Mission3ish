@@ -9,6 +9,6 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'build']
 
-- name: 'gcr.io/$PROJECT_ID/firebase'
+- name: 'gcr.io/$PROJECT_ID/Mission3'
   args: ['deploy']
 
