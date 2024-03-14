@@ -1,14 +1,43 @@
-steps:
+name: CI/CD Workflow
 
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'test:unit']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'build']
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-- name: 'gcr.io/$PROJECT_ID/Mission3'
-  args: ['deploy']
+      - name: Install dependencies
+        run: npm install
 
+      - name: Run tests
+        run: npm test
+
+      - name: Build application
+        run: npm run build
+
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "Deploying to staging environment..."
+          # Add deployment script here
+
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "Deploying to production environment..."
+          # Add deployment script here
