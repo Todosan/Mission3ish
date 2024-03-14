@@ -12,9 +12,10 @@ const App: React.FC = () => {
       const response = await axios.post('http://localhost:3000/calculateCarValue', { model, year });
       setCarValue(response.data.Car_value);
       setError(null);
-    } catch (err) {
+    } catch (err)
+     {
       setCarValue(null)
-      setError(err?.response?.data?.error ?? 'An error occurred.');
+      setError('An error occurred.');
     }
   };
 
